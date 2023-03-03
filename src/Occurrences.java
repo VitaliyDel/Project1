@@ -1,31 +1,37 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Collections;
+
 
 public class Occurrences {
     private final HashMap<String,Integer> map = new HashMap<>();
+    private final List<String> list;
 
-    private String count;
-    public HashMap<String,Integer> transfer(List<String> list) {
-        for (int i = 0; i < list.toArray().length; i++) {
-            count = list.get(i);
-            if(map.containsKey(count)){
-                map.put(count,map.get(count) + 1);
-            }
-            else{
-            map.put(count,1);
-            }
-        }
-        return map;
+    public Occurrences(List<String> list) {
+        this.list = new ArrayList<>(list);
+        AfilterList();
+        System.out.println(this.list);
+        transfer();
+
     }
-
-    public int searchWord(String word){
+    private void AfilterList(){
+        list.removeIf(String::isEmpty);
+    }
+    private void transfer() {
+        for(String word:list){
+            if(!map.containsKey(word)){
+                map.put(word,1);
+                continue;
+            }
+            map.put(word,map.get(word) + 1);
+        }
+    }
+    public void getSumValues(String word){
         if(map.containsKey(word)){
-            return map.get(word);
+            System.out.println(map.get(word));
         }
         else{
-            System.out.println("Такого слова в колекции нет.");
-            return  0;
+            System.out.println("Информация отсутствует.");
         }
     }
 }
