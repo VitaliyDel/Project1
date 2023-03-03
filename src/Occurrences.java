@@ -1,37 +1,36 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
 public class Occurrences {
-    private final HashMap<String,Integer> map = new HashMap<>();
+    private final HashMap<String,Integer> listMap = new HashMap<>();
     private final List<String> list;
 
     public Occurrences(List<String> list) {
-        this.list = new ArrayList<>(list);
-        AfilterList();
-        System.out.println(this.list);
+        this.list = list;
         transfer();
-
-    }
-    private void AfilterList(){
-        list.removeIf(String::isEmpty);
     }
     private void transfer() {
         for(String word:list){
-            if(!map.containsKey(word)){
-                map.put(word,1);
+            if(word.isEmpty()){
                 continue;
             }
-            map.put(word,map.get(word) + 1);
+            else if(word.equals("null")){
+                continue;
+            }
+            else if(!listMap.containsKey(word)){
+                listMap.put(word,1);
+                continue;
+            }
+            int count = listMap.get(word);
+            listMap.put(word,count + 1);
         }
     }
-    public void getSumValues(String word){
-        if(map.containsKey(word)){
-            System.out.println(map.get(word));
+    public int getSumValues(String word){
+        if(listMap.containsKey(word)){
+            return listMap.get(word);
         }
         else{
-            System.out.println("Информация отсутствует.");
+            throw new RuntimeException("Не допустимое значение для колекции или же отсутствие элемента.");
         }
     }
 }
